@@ -31,11 +31,13 @@ class BDTB:
             self.formatContent.append(re.sub('<.*?>', '\n', cc))
 
     def inputFile(self, pageIndex):
+        print '正在写入第%d页数据' %pageIndex
         if pageIndex == 1:
             self.file.writelines(self.title.group(1))
         for x in self.formatContent:
-            self.file.writelines('\n---------------------------------------' + str(self.contentIndex) + 
-                                 '---------------------------------------\n')
+            self.file.writelines('\n---------------------------------------' 
+                                 + str(self.contentIndex) 
+                                 + '---------------------------------------\n')
             self.file.writelines(x)
             self.contentIndex += 1
 
@@ -44,11 +46,15 @@ class BDTB:
         while True:
             self.getPage(str(pageIndex))
             self.getInf()
+            if pageIndex == 1:
+                if self.maxPage == None: print '该贴共有1页', 
+                else: print '该贴共有%d页' %int(self.maxPage.group(1))
             self.formatInf()
             self.inputFile(pageIndex)
             pageIndex += 1
-            if(pageIndex > int(self.maxPage.group(1))):
+            if self.maxPage == None or pageIndex > int(self.maxPage.group(1)):
                 break
+        print '写入任务完成'
         self.file.close()
 
 inputURL = raw_input('请输入贴吧域名：')
