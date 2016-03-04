@@ -1,8 +1,8 @@
 # -*- coding: UTF-8 -*-
 import urllib
 import urllib2
+import sys
 from PIL import Image
-from StringIO import StringIO
 from io import BytesIO
 
 class QDJW:
